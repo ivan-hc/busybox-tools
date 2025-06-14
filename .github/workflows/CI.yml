@@ -1,0 +1,58 @@
+name: Busybox binaries download
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: "0 12 7/7 * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: build
+      if: always()
+      run: |
+        architectures="i686 x86_64"
+        ref="https://busybox.net"
+
+        for arch in $architectures; do
+           subdir=$(curl -Ls https://busybox.net/downloads/binaries/ | tr '">< ' '\n' | grep "^[0-9].*$arch.*/$" | tail -1 | sed 's#/$##g')
+           source_list=$(curl -Ls https://busybox.net/downloads/binaries/"$subdir")
+           wget -r -l1 --no-parent https://busybox.net/downloads/binaries/"$subdir"
+           mkdir -p dist-"$arch"
+           cp -r busybox.net/downloads/binaries/"$subdir"/* dist-"$arch"/
+        done
+       
+  release:
+      needs: [build]
+      permissions: write-all
+      runs-on: ubuntu-latest
+
+      steps:
+
+        - name: busybox-tools-x86_64
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: busybox-tools-x86_64
+            automatic_release_tag: busybox-tools-x86_64
+            prerelease: true
+            draft: false
+            files: |
+              dist-x86_64/*
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: busybox-tools-i686
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: busybox-tools-i686
+            automatic_release_tag: busybox-tools-i686
+            prerelease: true
+            draft: false
+            files: |
+              dist-i686/*
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
