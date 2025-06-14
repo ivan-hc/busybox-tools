@@ -38,9 +38,13 @@ am -i --busybox yes
 am -i yes.busybox
 ```
 
-AM"/AppMan will consider this repository as a third-party repository, so the repository that will manage "AM" compatible lists is [ivan-hc/am-extras](https://github.com/ivan-hc/am-extras)
+AM"/AppMan will consider this repository as a third-party repository.
 
-See below for more information about "AM"
+The repository that will manage "AM" compatible lists is [ivan-hc/am-extras](https://github.com/ivan-hc/am-extras), you can see more detailed tables (the .md file with the name of your architecture) for the available programs here:
+
+**https://github.com/ivan-hc/am-extras/tree/main/busybox**
+
+***See below for more information about "AM"***
 
 ------------------------------------------------------------------------
 
