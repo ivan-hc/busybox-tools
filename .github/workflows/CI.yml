@@ -19,7 +19,7 @@ jobs:
       run: |
         architectures="i686 x86_64"
         ref="https://busybox.net"
-
+        mkdir -p dist
         for arch in $architectures; do
            subdir=$(curl -Ls https://busybox.net/downloads/binaries/ | tr '">< ' '\n' | grep "^[0-9].*$arch.*/$" | tail -1 | sed 's#/$##g')
            source_list=$(curl -Ls https://busybox.net/downloads/binaries/"$subdir")
@@ -29,10 +29,9 @@ jobs:
            for f in dist-"$arch"/busybox_* ; do 
               mv "$f" "$f-$arch"
            done
+           mv dist-"$arch"/*-"$arch" dist/
         done
-        mkdir -p dist
-        mv dist-*/* dist/
-
+ 
     - name: Upload artifact
       uses: actions/upload-artifact@v4.4.0
       with:
