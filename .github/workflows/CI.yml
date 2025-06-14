@@ -26,7 +26,7 @@ jobs:
            wget -r -l1 --no-parent https://busybox.net/downloads/binaries/"$subdir"
            mkdir -p dist-"$arch"
            cp -r busybox.net/downloads/binaries/"$subdir"/* dist-"$arch"/
-           for f in dist-"$arch"/* ; do 
+           for f in dist-"$arch"/busybox_* ; do 
               mv "$f" "$f-$arch"
            done
         done
