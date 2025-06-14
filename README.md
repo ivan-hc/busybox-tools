@@ -16,7 +16,7 @@ Checking and uploading/updating is done once a month.
 ------------------------------------------------------------------------
 
 ## Usage via "AM" package manager
-To install these executables in "[AM](https://github.com/ivan-hc/AM)", use the `--busybox` flag or the .busybox extension, for ezample:
+To install these executables in "[AM](https://github.com/ivan-hc/AM)", use the `--busybox` flag or the .busybox extension, for example:
 ```
 am -i --busybox appname
 am -i appname.busybox
