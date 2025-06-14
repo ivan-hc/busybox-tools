@@ -40,7 +40,7 @@ am -i yes.busybox
 
 AM"/AppMan will consider this repository as a third-party repository, so the repository that will manage "AM" compatible lists is [ivan-hc/am-extras](https://github.com/ivan-hc/am-extras)
 
-See below for more information.
+See below for more information about "AM"
 
 ------------------------------------------------------------------------
 
