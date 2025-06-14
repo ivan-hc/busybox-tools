@@ -30,6 +30,7 @@ jobs:
               mv "$f" "$f-$arch"
            done
         done
+        mkdir -p dist
         mv dist-*/* dist/
 
     - name: Upload artifact
