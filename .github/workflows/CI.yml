@@ -26,7 +26,17 @@ jobs:
            wget -r -l1 --no-parent https://busybox.net/downloads/binaries/"$subdir"
            mkdir -p dist-"$arch"
            cp -r busybox.net/downloads/binaries/"$subdir"/* dist-"$arch"/
+           for f in dist-"$arch"/* ; do 
+              mv "$f" "$f-$arch"
+           done
         done
+        mv dist-*/* dist/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4.4.0
+      with:
+        name: busybox-binaries
+        path: 'dist'
        
   release:
       needs: [build]
@@ -34,6 +44,9 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
+        - uses: actions/download-artifact@v4.1.8
+          with:
+            name: busybox-binaries
 
         - name: busybox-tools-x86_64
           uses: marvinpinto/action-automatic-releases@latest
@@ -43,7 +56,7 @@ jobs:
             prerelease: true
             draft: false
             files: |
-              dist-x86_64/*
+              *x86_64*
             repo_token: ${{ secrets.GITHUB_TOKEN }}
 
         - name: busybox-tools-i686
@@ -54,5 +67,5 @@ jobs:
             prerelease: true
             draft: false
             files: |
-              dist-i686/*
+              *i686*
             repo_token: ${{ secrets.GITHUB_TOKEN }}
