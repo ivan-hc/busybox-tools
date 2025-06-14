@@ -27,7 +27,7 @@ jobs:
            mkdir -p dist-"$arch"
            cp -r busybox.net/downloads/binaries/"$subdir"/* dist-"$arch"/
            for f in dist-"$arch"/busybox_* ; do 
-              mv "$f" "$f-$arch"
+              mv "$f" "$f-$subdir"
            done
            mv dist-"$arch"/*-"$arch" dist/
         done
@@ -56,7 +56,7 @@ jobs:
             prerelease: true
             draft: false
             files: |
-              busybox_*-x86_64
+              busybox_*-x86_64-*
             repo_token: ${{ secrets.GITHUB_TOKEN }}
 
         - name: busybox-tools-i686
@@ -67,5 +67,5 @@ jobs:
             prerelease: true
             draft: false
             files: |
-              busybox_*-i686
+              busybox_*-i686-*
             repo_token: ${{ secrets.GITHUB_TOKEN }}
